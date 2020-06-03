@@ -14,7 +14,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
-@Entity
+
 public class Reporte {
 
     protected SessionFactory sessionFactory;
@@ -33,6 +33,7 @@ public class Reporte {
             throw ex;
         }
     }
+    
     public List<Prestamo> buscarPrestamosPorCliente(int clienteid)  {
       
         Session session = sessionFactory.openSession();
@@ -57,6 +58,14 @@ public class Reporte {
 
 
 
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 

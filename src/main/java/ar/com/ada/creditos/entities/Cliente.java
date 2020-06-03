@@ -1,5 +1,6 @@
 package ar.com.ada.creditos.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -84,10 +85,12 @@ public class Cliente {
         this.domicilioAlternativo = domicilioAlternativo;
     }
 
-    public List<Prestamo> getPrestamos() {
-        return prestamos;
-    }
+	public List<Prestamo> getPrestamos() {
+		return prestamos; 
+	}
+
+
     public void setPrestamos(List<Prestamo> prestamos){
         this.prestamos = prestamos;
-    }
+}
 }

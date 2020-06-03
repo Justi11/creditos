@@ -1,15 +1,11 @@
 package ar.com.ada.creditos.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "cancelacion")
@@ -18,16 +14,18 @@ public class Cancelacion {
     @Column(name = "cancelacion_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cancelacionId;
-    @Column(name= "prestamo_id")
-    private int prestamoId;
+    
     @Column(name= "fecha_cancelacion")
     private int fechaCancelacion;
     private BigDecimal importe;
     private int cuota;
 
-    @ManyToOne
+   @ManyToOne
     @JoinColumn(name="prestamo_id", referencedColumnName="prestamo_id")
     private Prestamo prestamo;
+
+    @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Cancelacion> cancelacion= new ArrayList<>();
 
     public int getCancelacionId() {
         return cancelacionId;
@@ -36,14 +34,7 @@ public class Cancelacion {
     public void setCancelacionId(int cancelacionId) {
         this.cancelacionId = cancelacionId;
     }
-
-    public int getPrestamoId() {
-        return prestamoId;
-    }
-
-    public void setPrestamoId(int prestamoId) {
-        this.prestamoId = prestamoId;
-    }
+    
 
     public int getFechaCancelacion() {
         return fechaCancelacion;
@@ -69,13 +60,7 @@ public class Cancelacion {
         this.cuota = cuota;
     }
 
-    public Prestamo getPrestamo() {
-        return prestamo;
-    }
-
-    public void setPrestamo(Prestamo prestamo) {
-        this.prestamo = prestamo;
+ 
     }
 
 
-}

@@ -107,10 +107,10 @@ public class ClienteManager {
 
         List<Cliente> todos = query.getResultList();
 
-        return todos;
+        return todos; 
 
     }
-
+    
     /**
      * Busca una lista de clientes por el nombre completo Esta armado para que se
      * pueda generar un SQL Injection y mostrar commo NO debe programarse.
@@ -128,10 +128,22 @@ public class ClienteManager {
         // como nombre: "' or '1'='1"
         Query query = session.createNativeQuery("SELECT * FROM cliente where nombre = " + nombre + "'", Cliente.class);
 
-        List<Cliente> clientes = query.getResultList();
+        // Forma2: usando SQL con parametros
+        Query querySQLConParametros = session.createNativeQuery("SELECT * FROM cliente where nombre = ?",
+                Cliente.class);
+        querySQLConParametros.setParameter(1, nombre);
+
+        // Forma3: usando JPQL con parametros
+        Query queryJPQLConParametros = session.createQuery("SELECT c FROM Cliente c where c.nombre = :nombre",
+                Cliente.class);
+        queryJPQLConParametros.setParameter(nombre, nombre);
+
+        List<Cliente> clientes = queryJPQLConParametros.getResultList();
 
         return clientes;
 
     }
 
+        
+       
 }

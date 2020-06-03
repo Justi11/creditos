@@ -73,4 +73,10 @@ public class Prestamo {
     public Cliente getCliente() {
         return cliente;
     }
+	public String getNombre() {
+		return cliente.getNombre();
+	}
+	public Integer getClienteId() {
+		return cliente.getClienteId();
+    }
 }
