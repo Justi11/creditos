@@ -23,7 +23,7 @@ public class ABM {
 
     protected PrestamoManager ABMPrestamo = new PrestamoManager();
 
-    protected Reporte ABMReporte;
+    protected Reporte ABMReporte = new Reporte();
 
 
 
@@ -78,7 +78,7 @@ public class ABM {
                         listarPrestamoDni();
                         break;
                     case 9:
-                        buscarPrestamosPorCliente();
+                        listarPrestamoPorCliente();
                         break;
 
                 }
@@ -343,7 +343,7 @@ public class ABM {
 
     private void mostrarPrestamo(Prestamo d) {
 
-        System.out.print("Nombre:" + d.getCliente() + "Id: " + " Importe: " + d.getImporte());
+        System.out.println("Nombre:" + d.getNombre() + " PrestamoId: " + d.getPrestamoId() + " Importe: " + d.getImporte() + "." );
 
     }
 
@@ -361,9 +361,13 @@ public class ABM {
 
     public void mostrarPrestamoId(Prestamo prestamo) {
 
-        System.out.print("Cliente_Id: " + prestamo.getCliente() + "Cliente: " + prestamo.getCliente().getNombre()
-                + "PrestamoId: " + prestamo.getPrestamoId() + " Cuotas: " + prestamo.getCuotas() + " Importe: "
-                + prestamo.getImporte() + " Fecha: " + prestamo.getFecha() + " Fecha Alta: " + prestamo.getFechaAlta());
+        System.out.println("Cliente_Id: " + prestamo.getClienteId() +
+         " Cliente: " + prestamo.getCliente().getNombre()+
+        " PrestamoId: " + prestamo.getPrestamoId() + 
+        " Cuotas: " + prestamo.getCuotas() + 
+        " Importe: " + prestamo.getImporte() + 
+        " Fecha: " + prestamo.getFecha() + 
+        " Fecha Alta: " + prestamo.getFechaAlta());
 
         if (prestamo.getCliente().getDomicilioAlternativo() != null)
             System.out.println(" Alternativo: " + prestamo.getCliente().getDomicilioAlternativo());
@@ -371,12 +375,12 @@ public class ABM {
             System.out.println();
     }
 
-    public void buscarPrestamosPorCliente() {
+    public void listarPrestamoPorCliente() {
         System.out.println("Ingrese el id del cliente:");
         int numcli = Teclado.nextInt();
         Cliente clienteEncontradoId = ABMCliente.read(numcli);
 
-        List<Prestamo> prestamos = ABMReporte.buscarPrestamosPorCliente(clienteEncontradoId.getClienteId());
+        List<Prestamo> prestamos = ABMReporte.buscarPoridCliente(clienteEncontradoId.getClienteId());
         for (Prestamo prestamo : prestamos) {
             mostrarPrestamoId(prestamo);
         }
