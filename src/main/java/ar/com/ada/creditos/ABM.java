@@ -14,6 +14,8 @@ import java.util.Scanner;
 import ar.com.ada.creditos.entities.*;
 import ar.com.ada.creditos.excepciones.*;
 import ar.com.ada.creditos.managers.*;
+import ar.com.ada.creditos.services.ReporteService;
+import ar.com.ada.creditos.entities.reportes.*;
 
 public class ABM {
 
@@ -23,9 +25,9 @@ public class ABM {
 
     protected PrestamoManager ABMPrestamo = new PrestamoManager();
 
-    protected Reporte ABMReporte = new Reporte();
+    protected ReportePrestamoManager ABMReporte = new ReportePrestamoManager();
 
-
+    protected ReporteService reporteService = new ReporteService(ABMReporte);
 
     public void iniciar() throws Exception {
 
@@ -72,13 +74,16 @@ public class ABM {
                         asignarPrestamo();
                         break;
                     case 7:
-                        listarPrestamo();
+                        listarTodosLosPrestamos();
                         break;
                     case 8:
-                        listarPrestamoDni();
+                        listarPrestamosPorDni();
                         break;
                     case 9:
-                        listarPrestamoPorCliente();
+                        ReportePrestamoPorCliente();
+                        break;
+                    case 10:
+
                         break;
 
                 }
@@ -332,7 +337,7 @@ public class ABM {
      * }
      **/
 
-    public void listarPrestamo() {
+    public void listarTodosLosPrestamos() {
 
         List<Prestamo> todos = ABMPrestamo.buscarTodos();
         for (Prestamo d : todos) {
@@ -343,11 +348,12 @@ public class ABM {
 
     private void mostrarPrestamo(Prestamo d) {
 
-        System.out.println("Nombre:" + d.getNombre() + " PrestamoId: " + d.getPrestamoId() + " Importe: " + d.getImporte() + "." );
+        System.out.println(
+                "Nombre:" + d.getNombre() + " PrestamoId: " + d.getPrestamoId() + " Importe: " + d.getImporte() + ".");
 
     }
 
-    public void listarPrestamoDni() {
+    public void listarPrestamosPorDni() {
 
         System.out.println("Ingrese el dni de cliente:");
         String dni = Teclado.nextLine();
@@ -361,13 +367,10 @@ public class ABM {
 
     public void mostrarPrestamoId(Prestamo prestamo) {
 
-        System.out.println("Cliente_Id: " + prestamo.getClienteId() +
-         " Cliente: " + prestamo.getCliente().getNombre()+
-        " PrestamoId: " + prestamo.getPrestamoId() + 
-        " Cuotas: " + prestamo.getCuotas() + 
-        " Importe: " + prestamo.getImporte() + 
-        " Fecha: " + prestamo.getFecha() + 
-        " Fecha Alta: " + prestamo.getFechaAlta());
+        System.out.println("Cliente_dni: " + prestamo.getCliente().getDni() + " Cliente: "
+                + prestamo.getCliente().getNombre() + " PrestamoId: " + prestamo.getPrestamoId() + " Cuotas: "
+                + prestamo.getCuotas() + " Importe: " + prestamo.getImporte() + " Fecha: " + prestamo.getFecha()
+                + " Fecha Alta: " + prestamo.getFechaAlta());
 
         if (prestamo.getCliente().getDomicilioAlternativo() != null)
             System.out.println(" Alternativo: " + prestamo.getCliente().getDomicilioAlternativo());
@@ -375,15 +378,12 @@ public class ABM {
             System.out.println();
     }
 
-    public void listarPrestamoPorCliente() {
+    public void ReportePrestamoPorCliente() {
         System.out.println("Ingrese el id del cliente:");
-        int numcli = Teclado.nextInt();
-        Cliente clienteEncontradoId = ABMCliente.read(numcli);
+        int clienteId = Teclado.nextInt();
+        Teclado.nextLine();
+        reporteService.mostrarReportePrestamoId(clienteId);
 
-        List<Prestamo> prestamos = ABMReporte.buscarPoridCliente(clienteEncontradoId.getClienteId());
-        for (Prestamo prestamo : prestamos) {
-            mostrarPrestamoId(prestamo);
-        }
     }
 
     public static void printOpciones() {
@@ -395,9 +395,10 @@ public class ABM {
         System.out.println("4. Para ver el listado.");
         System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
         System.out.println("6. Agregar un prestamo a un cliente.");
-        System.out.println("7. Ver todo el listado de prestamos.");
-        System.out.println("8. Buscar Prestamos por Dni. ");
-        System.out.println("9. Buscar Prestamos por cliente. ");
+        System.out.println("7. Listar todos los prestamos.");
+        System.out.println("8. Listar Prestamos por Dni. ");
+        System.out.println("9. Reporte de Prestamos por cliente. ");
+        System.out.println("10. Reporte de todos los Prestamos. ");
         System.out.println("0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");
