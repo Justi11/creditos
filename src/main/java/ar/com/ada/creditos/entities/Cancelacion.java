@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/* crear la entidad Cancelación y agregar:
+1) Que se pueda agregar un pago a un préstamo.
+2) Que se pueda eliminar un pago a un préstamo(en forma LOGICA)
+3) Reportes sobre cancelaciones(usar los reportes que hayamos hecho)*/
 
 @Entity
 @Table(name = "cancelacion")
@@ -19,13 +23,13 @@ public class Cancelacion {
     private int fechaCancelacion;
     private BigDecimal importe;
     private int cuota;
+    
 
    @ManyToOne
     @JoinColumn(name="prestamo_id", referencedColumnName="prestamo_id")
     private Prestamo prestamo;
 
-    @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Cancelacion> cancelacion= new ArrayList<>();
+    
 
     public int getCancelacionId() {
         return cancelacionId;

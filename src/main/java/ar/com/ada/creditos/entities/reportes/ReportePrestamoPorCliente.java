@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 
 import javax.persistence.*;
 
+
+/*1) por cliente, saber cuantos prestamos tiene, cual el importe mas alto y cuanto en total de prestamos.
+2) obtenemos la cantidad de prestamos y cuanta plata en total es.*/
+
+
 @Entity
 
 public class ReportePrestamoPorCliente {
     @Id
     @Column(name = "cliente_id")
-
     private int clienteId;
     private int cantidadPrestamos;
     private String nombre;
