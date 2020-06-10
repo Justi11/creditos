@@ -80,10 +80,13 @@ public class ABM {
                         listarPrestamosPorDni();
                         break;
                     case 9:
-                        ReportePrestamoPorCliente();
+                        reportePrestamoPorCliente();
                         break;
                     case 10:
-
+                        reportePrestamoTotales();
+                        break;
+                        case 11:
+                        nuevaCancelacion();
                         break;
 
                 }
@@ -378,13 +381,33 @@ public class ABM {
             System.out.println();
     }
 
-    public void ReportePrestamoPorCliente() {
+    public void reportePrestamoPorCliente() {
         System.out.println("Ingrese el id del cliente:");
         int clienteId = Teclado.nextInt();
         Teclado.nextLine();
         reporteService.mostrarReportePrestamoId(clienteId);
 
     }
+
+    public void reportePrestamoTotales() {
+        reporteService.mostrarReportePrestamoTotales();
+    }
+
+    public void nuevaCancelacion();{
+        
+            System.out.println("Ingrese el id del Prestamo a pagar: ");
+            int prestamoId = Teclado.nextInt();
+            Teclado.nextLine();
+            System.out.println("Ingrese el Importe de la cuota: ");
+        BigDecimal importe = Teclado.nextBigDecimal();
+        Teclado.nextLine();
+
+        prestamoService.generarImprimirCancelacion(prestamoId, importe, cuota, testDate);
+
+    }
+
+        
+    
 
     public static void printOpciones() {
         System.out.println("=======================================");
